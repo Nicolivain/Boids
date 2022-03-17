@@ -22,7 +22,7 @@ int mouse_x = 0;
 int mouse_y = 0;
 int mouse_buttons[GLUT_NUM_MOUSE_BUTTONS];
 int window_w = 800;
-int window_h = 600;
+int window_h = 800;
 // Camera
 CameraTrackball camera;
 
@@ -130,7 +130,7 @@ int main(int argc, char** argv)
 	glutInitWindowPosition(WINDOW_X, WINDOW_Y);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	glViewport(0, 0, window_w, window_h);
-	glutCreateWindow("Test window");
+	glutCreateWindow("Boids");
 
 	init();
 	glutDisplayFunc(display);
