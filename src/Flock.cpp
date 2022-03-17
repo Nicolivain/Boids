@@ -29,5 +29,8 @@ void Flock::draw()
 
 void Flock::move()
 {
-
+	int i; 
+	for (i=0; i<10; i++){
+		boids[i].move();
+	}
 }

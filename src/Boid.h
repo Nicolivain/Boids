@@ -15,6 +15,8 @@ public:
 	// Destructor
 	~Boid();
 	void draw();
+	void move();
 };
+
 
 #endif  // BOIDS_LIB_SAMPLE_CLASS_H_
