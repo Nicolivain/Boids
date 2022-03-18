@@ -9,11 +9,18 @@ public:
 	Eigen::Vector3f p;
 	Eigen::Vector3f v;
 	Eigen::Vector3f a;
+	Eigen::Vector3f color;
+
+	Eigen::Vector3f origin_ax = {0, 0, 1};
+	Eigen::Vector3f ax;
+
+	float t;
 
 	// Constructor
 	Boid();
 	// Destructor
 	~Boid();
+
 	void draw();
 	void move();
 };

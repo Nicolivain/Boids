@@ -9,7 +9,8 @@ Flock::Flock() {
 	//boids = new vector();
 
 	int i;
-	for (i=0; i<10; i++){
+	n = 10;
+	for (i=0; i<n; i++){
 		boids.push_back(Boid());
 	}
 	
@@ -21,7 +22,7 @@ Flock::~Flock() {
 void Flock::draw()
 {
 	int i; 
-	for (i=0; i<10; i++){
+	for (i=0; i<n; i++){
 		boids[i].draw();
 	}
 
@@ -30,7 +31,7 @@ void Flock::draw()
 void Flock::move()
 {
 	int i; 
-	for (i=0; i<10; i++){
+	for (i=0; i<n; i++){
 		boids[i].move();
 	}
 }

@@ -7,7 +7,7 @@
 class Flock {
 public:
 	std::vector<Boid> boids;
-	
+	int n;
 
 		// Constructor
 	Flock();
