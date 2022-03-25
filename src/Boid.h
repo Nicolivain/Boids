@@ -19,6 +19,7 @@ public:
 
 	// Constructor
 	Boid();
+	Boid(Eigen::Vector3f,  Eigen::Vector3f);
 	// Destructor
 	~Boid();
 

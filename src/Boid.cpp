@@ -26,6 +26,17 @@ Boid::Boid() {
 
 }
 
+Boid::Boid(Eigen::Vector3f pos, Eigen::Vector3f vit){
+	p = pos;
+	v = vit;
+
+	color = {255, 255, 255};
+
+	ax = origin_ax.cross(v);
+	ax.normalized(); 
+	t = 180 / 3.1415 * (acos(v.dot(ax) / sqrt(v.dot(v))));
+}
+
 Boid::~Boid() {
 }
 
@@ -57,8 +68,6 @@ void Boid::move(){
 }
 
 void Boid::update_speed(Eigen::Vector3f a){
-	std::cout<<a<<std::endl;
-	std::cout<<v<<std::endl;
 	v = v + a * dt;
 }
 
