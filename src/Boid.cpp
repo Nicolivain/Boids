@@ -43,7 +43,7 @@ void Boid::move(){
 	int i;
 
 	for (i=0; i<3; i++){
-		p[i] = p[i] + v[i]*0.00001;
+		p[i] = p[i] + v[i] * dt;
 
 		if (p[i]<0 | p[i]>10) {
 			v[i] = -v[i];
@@ -54,5 +54,9 @@ void Boid::move(){
 		}
 	}
 	
+}
+
+void Boid::update_speed(Eigen::Vector3f a){
+	v = v + a * dt;
 }
 

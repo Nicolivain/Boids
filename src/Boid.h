@@ -15,6 +15,8 @@ public:
 	Eigen::Vector3f ax;
 
 	float t;
+	const float dt = 0.0001;
+
 
 	// Constructor
 	Boid();
@@ -23,6 +25,7 @@ public:
 
 	void draw();
 	void move();
+	void update_speed(Eigen::Vector3f);
 };
 
 

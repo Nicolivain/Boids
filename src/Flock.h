@@ -6,10 +6,14 @@
 
 class Flock {
 public:
-	std::vector<Boid> boids;
+	
 	int n;
+	std::vector<Boid> boids;
 
-		// Constructor
+	Eigen::Vector3f c;
+	Eigen::Vector3f v;
+
+	// Constructor
 	Flock();
 	// Destructor
 	~Flock();
@@ -17,6 +21,14 @@ public:
 
 	void draw();
 	void move();
+
+	void compute_flock_c();
+	void compute_flock_v();
+
+	Eigen::Vector3f rule_cohesion(Boid);
+	Eigen::Vector3f rule_separation(Boid);
+	Eigen::Vector3f rule_alignement(Boid);
+
 };
 
 #endif 
