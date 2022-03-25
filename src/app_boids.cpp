@@ -1,7 +1,7 @@
 #include <iostream>
 #include <windows.h>  // For MS Windows
 #include <GL/glut.h>  // GLUT, includes glu.h and gl.h
-#include <Eigen/Dense>  // inclue toute la librairie Eigen
+#include <Eigen/Dense> // inclue toute la librairie Eigen
 #include <math.h>
 #include <time.h>
 #include <vector>

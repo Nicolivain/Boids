@@ -57,6 +57,8 @@ void Boid::move(){
 }
 
 void Boid::update_speed(Eigen::Vector3f a){
+	std::cout<<a<<std::endl;
+	std::cout<<v<<std::endl;
 	v = v + a * dt;
 }
 

@@ -3,7 +3,6 @@
 
 #include <Eigen/Dense>
 
-
 class Boid {
 public:
 	Eigen::Vector3f p;
@@ -15,7 +14,7 @@ public:
 	Eigen::Vector3f ax;
 
 	float t;
-	const float dt = 0.0001;
+	float dt = 0.001;
 
 
 	// Constructor

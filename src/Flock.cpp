@@ -30,8 +30,16 @@ void Flock::draw()
 
 void Flock::move()
 {
-	int i; 
+	int i;
+	Eigen::Vector3f a; 
 	for (i=0; i<n; i++){
+		a = rule_cohesion(boids[i]);
+		// std::cout<<a<<std::endl;
+		a = a + rule_alignement(boids[i]);
+		//std::cout<<a<<std::endl;
+		a = a + rule_separation(boids[i]);
+		// std::cout<<a<<std::endl;
+		boids[i].update_speed(a);
 		boids[i].move();
 	}
 }
