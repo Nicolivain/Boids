@@ -50,7 +50,7 @@ void Boid::draw()
 	glPopMatrix();
 }
 
-void Boid::move(){
+void Boid::move(float dt){
 	int i;
 
 	for (i=0; i<3; i++){
@@ -67,7 +67,7 @@ void Boid::move(){
 	
 }
 
-void Boid::update_speed(Eigen::Vector3f a){
+void Boid::update_speed(Eigen::Vector3f a, float dt){
 	v = v + a * dt;
 }
 

@@ -89,7 +89,7 @@ void systemEvolution()
 	t = (float)glutGet(GLUT_ELAPSED_TIME);
 	dt = (t - last_t)*0.001;
 
-	flock.move();
+	flock.move(dt);
 	
 }
 

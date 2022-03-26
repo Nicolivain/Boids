@@ -20,7 +20,7 @@ public:
 
 
 	void draw();
-	void move();
+	void move(float);
 
 	void compute_flock_c();
 	void compute_flock_v();

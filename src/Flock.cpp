@@ -28,7 +28,7 @@ void Flock::draw()
 
 }
 
-void Flock::move()
+void Flock::move(float dt)
 {
 	int i;
 	Eigen::Vector3f a; 
@@ -36,8 +36,8 @@ void Flock::move()
 		a = rule_cohesion(boids[i]);
 		a = a + rule_alignement(boids[i]);
 		a = a + rule_separation(boids[i]);
-		boids[i].update_speed(a);
-		boids[i].move();
+		boids[i].update_speed(a, dt);
+		boids[i].move(dt);
 	}
 }
 
