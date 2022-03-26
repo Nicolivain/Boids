@@ -6,12 +6,21 @@
 
 //BOID
 Flock::Flock() {
-	//boids = new vector();
 
+
+	float alpha = 0.1;  // part of randomness in init
+	Eigen::Vector3f fixed_init_p = {0, 0, 0};
+	Eigen::Vector3f fixed_init_v = {1, 1, 1};
+
+	// we initialize the boids in the flock constructor
+	n = 20;
 	int i;
-	n = 100;
 	for (i=0; i<n; i++){
-		boids.push_back(Boid());
+
+		Eigen::Vector3f rd_init_p = {(float)(rand())/RAND_MAX, (float)(rand())/RAND_MAX, (float)(rand())/RAND_MAX};
+		Eigen::Vector3f rd_init_v = {(float)(rand())/RAND_MAX, (float)(rand())/RAND_MAX, (float)(rand())/RAND_MAX};
+
+		boids.push_back(Boid(alpha * 2 * rd_init_p + (1-alpha) * fixed_init_p, alpha * rd_init_v + (1-alpha) * fixed_init_v));
 	}
 	
 }
@@ -25,6 +34,14 @@ void Flock::draw()
 	for (i=0; i<n; i++){
 		boids[i].draw();
 	}
+
+	// draw the center of mass of the flock
+	glPushMatrix();
+	glTranslatef(c[0],c[1],c[2]);
+	glColor3f(255, 0, 0);
+	//glRotatef(t, ax[0] , ax[1], ax[2]);
+	glutSolidCube(0.3);
+	glPopMatrix();
 
 }
 
@@ -60,10 +77,12 @@ void Flock::compute_flock_v(){
 }
 
 Eigen::Vector3f Flock::rule_cohesion(Boid b) {
+	compute_flock_c();
 	return 0.01 * (c - b.p);
 }
 
 Eigen::Vector3f Flock::rule_alignement(Boid b) {
+	compute_flock_v();
 	return 0.2 * (v - b.v);
 }
 
