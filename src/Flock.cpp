@@ -13,7 +13,7 @@ Flock::Flock() {
 	Eigen::Vector3f fixed_init_v = {1, 1, 1};
 
 	// we initialize the boids in the flock constructor
-	n = 20;
+	n = 50;
 	int i;
 	for (i=0; i<n; i++){
 
@@ -39,12 +39,14 @@ void Flock::draw()
 	target.draw();
 
 	// draw the center of mass of the flock
+	/*
 	glPushMatrix();
 	glTranslatef(c[0],c[1],c[2]);
 	glColor3f(255, 0, 0);
 	//glRotatef(t, ax[0] , ax[1], ax[2]);
 	glutSolidCube(0.3);
 	glPopMatrix();
+	*/
 }
 
 void Flock::move(float dt)
@@ -82,7 +84,7 @@ void Flock::compute_flock_v(){
 
 Eigen::Vector3f Flock::rule_cohesion(Boid b) {
 	compute_flock_c();
-	return 0.01 * (c - b.p);
+	return 0.1 * (c - b.p);
 }
 
 Eigen::Vector3f Flock::rule_alignement(Boid b) {
@@ -108,5 +110,5 @@ Eigen::Vector3f Flock::rule_separation(Boid b) {
 		}
 	}
 
-	return 0.3 * (b.p - boids[min_boid_idx].p);
+	return 1 * (b.p - boids[min_boid_idx].p);
 }
