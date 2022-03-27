@@ -56,13 +56,9 @@ void Boid::move(float dt){
 	for (i=0; i<3; i++){
 		p[i] = p[i] + v[i] * dt;
 
-		if (p[i]<0 | p[i]>10) {
-			v[i] = -v[i];
-			
-			ax = origin_ax.cross(v);
-			ax.normalized(); 
-			t = 180 / 3.1415 * (acos(v.dot(ax) / sqrt(v.dot(v))));
-		}
+		ax = origin_ax.cross(v);
+		ax.normalized(); 
+		t = 180 / 3.1415 * (acos(v.dot(ax) / sqrt(v.dot(v))));
 	}
 	
 }

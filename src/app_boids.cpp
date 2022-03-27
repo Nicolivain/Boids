@@ -34,6 +34,8 @@ float dt = 0;
 
 static Flock flock;
 
+
+
 void init(void)
 {	
 	glEnable(GL_DEPTH_TEST);

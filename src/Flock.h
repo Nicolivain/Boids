@@ -2,6 +2,7 @@
 #define FLOCK_H
 
 #include "Boid.h"
+#include "Target.h"
 #include <vector>
 
 class Flock {
@@ -29,6 +30,8 @@ public:
 	Eigen::Vector3f rule_separation(Boid);
 	Eigen::Vector3f rule_alignement(Boid);
 
+
+	Target target;
 };
 
 #endif 

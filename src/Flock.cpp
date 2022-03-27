@@ -20,9 +20,10 @@ Flock::Flock() {
 		Eigen::Vector3f rd_init_p = {(float)(rand())/RAND_MAX, (float)(rand())/RAND_MAX, (float)(rand())/RAND_MAX};
 		Eigen::Vector3f rd_init_v = {(float)(rand())/RAND_MAX, (float)(rand())/RAND_MAX, (float)(rand())/RAND_MAX};
 
-		boids.push_back(Boid(alpha * 2 * rd_init_p + (1-alpha) * fixed_init_p, alpha * rd_init_v + (1-alpha) * fixed_init_v));
+		boids.push_back(Boid(alpha * 4 * rd_init_p + (1-alpha) * fixed_init_p, alpha * rd_init_v + (1-alpha) * fixed_init_v));
 	}
-	
+
+	target = Target();	
 }
 
 Flock::~Flock() {
@@ -35,6 +36,8 @@ void Flock::draw()
 		boids[i].draw();
 	}
 
+	target.draw();
+
 	// draw the center of mass of the flock
 	glPushMatrix();
 	glTranslatef(c[0],c[1],c[2]);
@@ -42,7 +45,6 @@ void Flock::draw()
 	//glRotatef(t, ax[0] , ax[1], ax[2]);
 	glutSolidCube(0.3);
 	glPopMatrix();
-
 }
 
 void Flock::move(float dt)
@@ -53,9 +55,11 @@ void Flock::move(float dt)
 		a = rule_cohesion(boids[i]);
 		a = a + rule_alignement(boids[i]);
 		a = a + rule_separation(boids[i]);
+		a = a + target.get_aim_accelaration(boids[i]);
 		boids[i].update_speed(a, dt);
 		boids[i].move(dt);
 	}
+	target.update(c);
 }
 
 void Flock::compute_flock_c(){
@@ -104,5 +108,5 @@ Eigen::Vector3f Flock::rule_separation(Boid b) {
 		}
 	}
 
-	return 0.5 * (b.p - boids[min_boid_idx].p);
+	return 0.3 * (b.p - boids[min_boid_idx].p);
 }
