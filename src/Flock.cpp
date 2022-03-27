@@ -24,6 +24,7 @@ Flock::Flock() {
 	}
 
 	target = Target();	
+	pred = Predator();
 }
 
 Flock::~Flock() {
@@ -35,7 +36,7 @@ void Flock::draw()
 	for (i=0; i<n; i++){
 		boids[i].draw();
 	}
-
+	pred.draw();
 	target.draw();
 
 	// draw the center of mass of the flock
@@ -58,9 +59,13 @@ void Flock::move(float dt)
 		a = a + rule_alignement(boids[i]);
 		a = a + rule_separation(boids[i]);
 		a = a + target.get_aim_accelaration(boids[i]);
+		a = a + 0.1 * (boids[i].p - pred.p);
+
 		boids[i].update_speed(a, dt);
 		boids[i].move(dt);
 	}
+	pred.update_speed(c, dt);
+	pred.move(dt);
 	target.update(c);
 }
 
