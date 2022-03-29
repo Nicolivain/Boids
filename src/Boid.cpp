@@ -112,5 +112,3 @@ Eigen::Vector3f Boid::rule_separation(std::vector<Boid> boids, int n) {
 	}
 	return r;
 }
-
-

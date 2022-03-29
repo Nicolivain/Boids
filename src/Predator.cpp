@@ -18,7 +18,6 @@ Predator::Predator(){
     max_speed = 4;
 }
 
-
 void Predator::update_speed(Eigen::Vector3f c, float dt){
 	v = v + (c-p) * dt;
     cap_speed();
