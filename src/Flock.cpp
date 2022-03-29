@@ -7,13 +7,11 @@
 //BOID
 Flock::Flock() {
 
-
 	float alpha = 0.1;  // part of randomness in init
 	Eigen::Vector3f fixed_init_p = {0, 0, 0};
 	Eigen::Vector3f fixed_init_v = {1, 1, 1};
 
 	// we initialize the boids in the flock constructor
-	n = 20;
 	int i;
 	for (i=0; i<n; i++){
 
@@ -52,15 +50,20 @@ void Flock::draw()
 
 void Flock::move(float dt)
 {
-	int i;
 	Eigen::Vector3f a; 
+	compute_dist_matrix();
+	
+	for (int i=0; i<n; i++){
+		std::vector<Boid> nb;
+		std::copy(boids.begin(), boids.end(), std::back_inserter(nb));
+		int cpt = reorder_boids(i, nb);
+		std::cout<<cpt<<std::endl;
 
-	for (i=0; i<n; i++){
-		a = boids[i].rule_cohesion(boids, n);
-		a = a + boids[i].rule_alignement(boids, n);
-		a = a + boids[i].rule_separation(boids, n);
+		a = boids[i].rule_cohesion(nb, cpt);
+		a = a + boids[i].rule_alignement(nb, cpt);
+		a = a + boids[i].rule_separation(nb, cpt);
 		a = a + target.get_aim_acceleration(boids[i]);
-		a = a + 0.1 * (boids[i].p - pred.p);
+		a = a + 0.5 * (boids[i].p - pred.p);
 
 		boids[i].update_speed(a, dt);
 		//target.reorient_speed(boids[i]);
@@ -74,23 +77,36 @@ void Flock::move(float dt)
 }
 
 void Flock::compute_flock_c(){
-	int i;
 	c = {0, 0, 0};
-	for (i=0; i<n; i++){
+	for (int i=0; i<n; i++){
 		c = c + boids[i].p;
 	}
 	c = c / n;
 }
 
 void Flock::compute_flock_v(){
-	int i;
 	v = {0, 0, 0};
-	for (i=0; i<n; i++){
+	for (int i=0; i<n; i++){
 		v = v + boids[i].p;
 	}
 	v = v / n;
 }
 
 void Flock::compute_dist_matrix(){
-	v = {0, 0, 0};
+	for (int i=0; i<n; i++){
+		for (int j=0; j<n; j++){
+		dist(i,j) = sqrt((boids[i].p-boids[j].p).dot(boids[i].p-boids[j].p));
+		}
+	}
+}
+
+int Flock::reorder_boids(int i, std::vector<Boid> nb){
+	int cpt = -1;
+	for (int j=0; j<n; j++){
+		if(dist(i,j)<=dist_treshold){
+			cpt++;
+			std::swap(nb[j], nb[cpt]);
+		}
+	}
+	return cpt;
 }

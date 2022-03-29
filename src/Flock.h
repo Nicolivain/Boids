@@ -10,9 +10,13 @@
 class Flock {
 public:
 	
-	int n = 10;
+	int n = 20;
+
 	std::vector<Boid> boids;
-	// Eigen::Matrix<float, n, n> dist;
+	
+	Eigen::Matrix<float, 20, 20> dist;
+	float dist_treshold = 1.5;
+
 	Eigen::Vector3f c;
 	Eigen::Vector3f v;
 
@@ -27,6 +31,8 @@ public:
 	void compute_flock_c();
 	void compute_flock_v();
 	void compute_dist_matrix();
+
+	int reorder_boids(int, std::vector<Boid>);
 
 	Target target;
 	Predator pred;
