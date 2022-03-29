@@ -57,14 +57,13 @@ void Flock::move(float dt)
 		std::vector<Boid> nb;
 		std::copy(boids.begin(), boids.end(), std::back_inserter(nb));
 		int cpt = reorder_boids(i, nb);
-		std::cout<<cpt<<std::endl;
+		//std::cout<<cpt<<std::endl;
 
 		a = boids[i].rule_cohesion(nb, cpt);
 		a = a + boids[i].rule_alignement(nb, cpt);
 		a = a + boids[i].rule_separation(nb, cpt);
 		a = a + target.get_aim_acceleration(boids[i]);
-		a = a + 0.5 * (boids[i].p - pred.p);
-
+		a = a + 0.3 * (boids[i].p - pred.p);
 		boids[i].update_speed(a, dt);
 		//target.reorient_speed(boids[i]);
 

@@ -58,14 +58,13 @@ void Boid::move(float dt){
 		ax.normalized(); 
 		t = 180 / 3.1415 * (acos(v.dot(ax) / sqrt(v.dot(v))));
 	}
-	
 }
 
 void Boid::update_speed(Eigen::Vector3f a, float dt){
+	a = cap_acc(a);
 	v = v + a * dt;
 	cap_speed();
 }
-
 
 void Boid::cap_speed(){
 	if (v.dot(v) > max_speed*max_speed){
@@ -73,6 +72,12 @@ void Boid::cap_speed(){
 	}
 }
 
+Eigen::Vector3f Boid::cap_acc(Eigen::Vector3f a){
+	if (a.dot(a) > 100){
+		a = 10 * a / sqrt(a.dot(a));
+	}
+	return a;
+}
 
 Eigen::Vector3f Boid::compute_flock_c(std::vector<Boid> boids, int n){
 	Eigen::Vector3f c = {0, 0, 0};
@@ -105,10 +110,13 @@ Eigen::Vector3f Boid::rule_alignement(std::vector<Boid> boids, int n) {
 Eigen::Vector3f Boid::rule_separation(std::vector<Boid> boids, int n) {
 	int dist;
 	Eigen::Vector3f r = {0, 0, 0};
+	Eigen::Vector3f base = {1, 1, 1};
 	for (int i=0; i<n; i++){
-		if ((p - boids[i].p).dot(p-boids[i].p) < 1){
+		if ((p - boids[i].p).dot(p-boids[i].p) < 0.002){
+			r = r + 0.01 * base;
+		} else if ((p - boids[i].p).dot(p-boids[i].p) < 1){
 			r = r + 0.5 * (p - boids[i].p);
-		}
+		} 
 	}
 	return r;
 }

@@ -10,11 +10,11 @@
 class Flock {
 public:
 	
-	int n = 20;
+	int n = 40;
 
 	std::vector<Boid> boids;
 	
-	Eigen::Matrix<float, 20, 20> dist;
+	Eigen::Matrix<float, 40, 40> dist;
 	float dist_treshold = 1.5;
 
 	Eigen::Vector3f c;

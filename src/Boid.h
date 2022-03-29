@@ -28,6 +28,7 @@ public:
 	void move(float);
 	void update_speed(Eigen::Vector3f, float);
 	void cap_speed();
+	Eigen::Vector3f cap_acc(Eigen::Vector3f);
 
 	Eigen::Vector3f rule_cohesion(std::vector<Boid>, int);
 	Eigen::Vector3f rule_separation(std::vector<Boid>, int);

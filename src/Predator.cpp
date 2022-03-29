@@ -15,7 +15,7 @@ Predator::Predator(){
 	t = 180 / 3.1415 * (acos(v.dot(ax) / sqrt(v.dot(v))));
 
     size = 8;
-    max_speed = 4;
+    max_speed = 2;
 }
 
 void Predator::update_speed(Eigen::Vector3f c, float dt){
