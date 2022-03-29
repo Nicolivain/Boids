@@ -15,12 +15,13 @@ private:
     float range_y = MAX_Y - MIN_Y;
     float range_z = MAX_Z - MIN_Z;
 
-    float alpha = 2;
+    float alpha = 1;
     Eigen::Vector3f pos;
 
 public:
     Target();
     void draw();
     void update(Eigen::Vector3f);
-    Eigen::Vector3f get_aim_accelaration(Boid);
+    void reorient_speed(Boid);
+    Eigen::Vector3f get_aim_acceleration(Boid);
 };

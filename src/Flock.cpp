@@ -54,16 +54,20 @@ void Flock::move(float dt)
 {
 	int i;
 	Eigen::Vector3f a; 
+
 	for (i=0; i<n; i++){
-		a = rule_cohesion(boids[i]);
-		a = a + rule_alignement(boids[i]);
-		a = a + rule_separation(boids[i]);
-		a = a + target.get_aim_accelaration(boids[i]);
+		a = boids[i].rule_cohesion(boids, n);
+		a = a + boids[i].rule_alignement(boids, n);
+		a = a + boids[i].rule_separation(boids, n);
+		a = a + target.get_aim_acceleration(boids[i]);
 		a = a + 0.1 * (boids[i].p - pred.p);
 
 		boids[i].update_speed(a, dt);
+		//target.reorient_speed(boids[i]);
+
 		boids[i].move(dt);
 	}
+	compute_flock_c();
 	pred.update_speed(c, dt);
 	pred.move(dt);
 	target.update(c);
@@ -87,33 +91,6 @@ void Flock::compute_flock_v(){
 	v = v / n;
 }
 
-Eigen::Vector3f Flock::rule_cohesion(Boid b) {
-	compute_flock_c();
-	return 0.1 * (c - b.p);
-}
-
-Eigen::Vector3f Flock::rule_alignement(Boid b) {
-	compute_flock_v();
-	return 0.2 * (v - b.v);
-}
-
-Eigen::Vector3f Flock::rule_separation(Boid b) {
-	int min_dist = 10000000;
-	int min_boid_idx = -1;
-	int i;
-	int dist;
-	Eigen::Vector3f current_d;
-	for (i=0; i<n; i++){
-		current_d = b.p - boids[i].p;
-		dist = current_d.dot(current_d);
-		if (dist == 0) {		 // si boids[i] == b
-			continue;
-		}
-		if (dist < min_dist){
-			min_dist = dist;
-			min_boid_idx = i;
-		}
-	}
-
-	return 1 * (b.p - boids[min_boid_idx].p);
+void Flock::compute_dist_matrix(){
+	v = {0, 0, 0};
 }
