@@ -3,7 +3,8 @@
 
 class Predator: public Boid{
     public:
-    float speed = 2;
+    float speed = 5;
+    float size = 10;
     Predator();
 
     void normalize_speed();

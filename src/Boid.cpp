@@ -46,7 +46,7 @@ void Boid::draw()
 	glTranslatef(p[0],p[1],p[2]);
 	glColor3f(color[0], color[1], color[2]);
 	glRotatef(t, ax[0] , ax[1], ax[2]);
-	glutSolidCone(0.1, 0.2, 10, 10);
+	glutSolidCone(size * 0.1, size * 0.2, size * 10, size * 10);
 	glPopMatrix();
 }
 
@@ -111,7 +111,7 @@ Eigen::Vector3f Boid::rule_separation(std::vector<Boid> boids, int n) {
 	int dist;
 	Eigen::Vector3f r = {0, 0, 0};
 	for (i=0; i<n; i++){
-		if ((p - boids[i].p).dot(p-boids[i].p) < 0.4){
+		if ((p - boids[i].p).dot(p-boids[i].p) < 1){
 			r = r + 0.5 * (p - boids[i].p);
 		}
 	}

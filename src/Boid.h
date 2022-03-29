@@ -15,7 +15,8 @@ public:
 	Eigen::Vector3f ax;
 
 	float t;
-	float max_speed = 4;
+	float max_speed = 10;
+	float size = 1;
 
 	// Constructor
 	Boid();

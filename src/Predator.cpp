@@ -1,4 +1,5 @@
 #include "Predator.h"
+#include <GL/glut.h>
 
 
 Predator::Predator(){
@@ -20,7 +21,7 @@ void Predator::normalize_speed(){
     v = speed * v / sqrt(v.dot(v));
 }
 
-void Predator::update_speed(Eigen::Vector3f a, float dt){
-	v = v + a * dt;
+void Predator::update_speed(Eigen::Vector3f c, float dt){
+	v = v + (c-p) * dt;
     normalize_speed();
 }

@@ -13,7 +13,7 @@ Flock::Flock() {
 	Eigen::Vector3f fixed_init_v = {1, 1, 1};
 
 	// we initialize the boids in the flock constructor
-	n = 50;
+	n = 20;
 	int i;
 	for (i=0; i<n; i++){
 
