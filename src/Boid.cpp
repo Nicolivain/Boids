@@ -46,24 +46,77 @@ void Boid::draw()
 	glTranslatef(p[0],p[1],p[2]);
 	glColor3f(color[0], color[1], color[2]);
 	glRotatef(t, ax[0] , ax[1], ax[2]);
-	glutSolidCone(0.1, 0.2, 10, 10);
+	glutSolidCone(size * 0.1, size * 0.2, size * 10, size * 10);
 	glPopMatrix();
 }
 
 void Boid::move(float dt){
-	int i;
-
-	for (i=0; i<3; i++){
+	for (int i=0; i<3; i++){
 		p[i] = p[i] + v[i] * dt;
 
 		ax = origin_ax.cross(v);
 		ax.normalized(); 
 		t = 180 / 3.1415 * (acos(v.dot(ax) / sqrt(v.dot(v))));
 	}
-	
 }
 
 void Boid::update_speed(Eigen::Vector3f a, float dt){
+	a = cap_acc(a);
 	v = v + a * dt;
+	cap_speed();
 }
 
+void Boid::cap_speed(){
+	if (v.dot(v) > max_speed*max_speed){
+		v = max_speed * v / sqrt(v.dot(v));
+	}
+}
+
+Eigen::Vector3f Boid::cap_acc(Eigen::Vector3f a){
+	if (a.dot(a) > 100){
+		a = 10 * a / sqrt(a.dot(a));
+	}
+	return a;
+}
+
+Eigen::Vector3f Boid::compute_flock_c(std::vector<Boid> boids, int n){
+	Eigen::Vector3f c = {0, 0, 0};
+	for (int i=0; i<n; i++){
+		c = c + boids[i].p;
+	}
+	c = c / n;
+	return c;
+}
+
+Eigen::Vector3f Boid::compute_flock_v(std::vector<Boid> boids, int n){
+	Eigen::Vector3f v = {0, 0, 0};
+	for (int i=0; i<n; i++){
+		v = v + boids[i].p;
+	}
+	v = v / n;
+	return v;
+}
+
+Eigen::Vector3f Boid::rule_cohesion(std::vector<Boid> boids, int n) {
+	Eigen::Vector3f c = compute_flock_c(boids, n);
+	return 0.1 * (c - p);
+}
+
+Eigen::Vector3f Boid::rule_alignement(std::vector<Boid> boids, int n) {
+	Eigen::Vector3f cv = compute_flock_c(boids, n);
+	return 0.2 * (cv - v);
+}
+
+Eigen::Vector3f Boid::rule_separation(std::vector<Boid> boids, int n) {
+	int dist;
+	Eigen::Vector3f r = {0, 0, 0};
+	Eigen::Vector3f base = {1, 1, 1};
+	for (int i=0; i<n; i++){
+		if ((p - boids[i].p).dot(p-boids[i].p) < 0.002){
+			r = r + 0.01 * base;
+		} else if ((p - boids[i].p).dot(p-boids[i].p) < 1){
+			r = r + 0.5 * (p - boids[i].p);
+		} 
+	}
+	return r;
+}

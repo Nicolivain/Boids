@@ -7,13 +7,11 @@
 //BOID
 Flock::Flock() {
 
-
 	float alpha = 0.1;  // part of randomness in init
 	Eigen::Vector3f fixed_init_p = {0, 0, 0};
 	Eigen::Vector3f fixed_init_v = {1, 1, 1};
 
 	// we initialize the boids in the flock constructor
-	n = 50;
 	int i;
 	for (i=0; i<n; i++){
 
@@ -52,68 +50,62 @@ void Flock::draw()
 
 void Flock::move(float dt)
 {
-	int i;
 	Eigen::Vector3f a; 
-	for (i=0; i<n; i++){
-		a = rule_cohesion(boids[i]);
-		a = a + rule_alignement(boids[i]);
-		a = a + rule_separation(boids[i]);
-		a = a + target.get_aim_accelaration(boids[i]);
-		a = a + 0.1 * (boids[i].p - pred.p);
+	compute_dist_matrix();
+	
+	for (int i=0; i<n; i++){
+		std::vector<Boid> nb;
+		std::copy(boids.begin(), boids.end(), std::back_inserter(nb));
+		int cpt = reorder_boids(i, nb);
+		//std::cout<<cpt<<std::endl;
 
+		a = boids[i].rule_cohesion(nb, cpt);
+		a = a + boids[i].rule_alignement(nb, cpt);
+		a = a + boids[i].rule_separation(nb, cpt);
+		a = a + target.get_aim_acceleration(boids[i]);
+		a = a + 0.3 * (boids[i].p - pred.p);
 		boids[i].update_speed(a, dt);
+		//target.reorient_speed(boids[i]);
+
 		boids[i].move(dt);
 	}
+	compute_flock_c();
 	pred.update_speed(c, dt);
 	pred.move(dt);
 	target.update(c);
 }
 
 void Flock::compute_flock_c(){
-	int i;
 	c = {0, 0, 0};
-	for (i=0; i<n; i++){
+	for (int i=0; i<n; i++){
 		c = c + boids[i].p;
 	}
 	c = c / n;
 }
 
 void Flock::compute_flock_v(){
-	int i;
 	v = {0, 0, 0};
-	for (i=0; i<n; i++){
+	for (int i=0; i<n; i++){
 		v = v + boids[i].p;
 	}
 	v = v / n;
 }
 
-Eigen::Vector3f Flock::rule_cohesion(Boid b) {
-	compute_flock_c();
-	return 0.1 * (c - b.p);
-}
-
-Eigen::Vector3f Flock::rule_alignement(Boid b) {
-	compute_flock_v();
-	return 0.2 * (v - b.v);
-}
-
-Eigen::Vector3f Flock::rule_separation(Boid b) {
-	int min_dist = 10000000;
-	int min_boid_idx = -1;
-	int i;
-	int dist;
-	Eigen::Vector3f current_d;
-	for (i=0; i<n; i++){
-		current_d = b.p - boids[i].p;
-		dist = current_d.dot(current_d);
-		if (dist == 0) {		 // si boids[i] == b
-			continue;
-		}
-		if (dist < min_dist){
-			min_dist = dist;
-			min_boid_idx = i;
+void Flock::compute_dist_matrix(){
+	for (int i=0; i<n; i++){
+		for (int j=0; j<n; j++){
+		dist(i,j) = sqrt((boids[i].p-boids[j].p).dot(boids[i].p-boids[j].p));
 		}
 	}
+}
 
-	return 1 * (b.p - boids[min_boid_idx].p);
+int Flock::reorder_boids(int i, std::vector<Boid> nb){
+	int cpt = -1;
+	for (int j=0; j<n; j++){
+		if(dist(i,j)<=dist_treshold){
+			cpt++;
+			std::swap(nb[j], nb[cpt]);
+		}
+	}
+	return cpt;
 }

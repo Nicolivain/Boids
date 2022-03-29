@@ -6,11 +6,16 @@
 #include "Predator.h"
 #include <vector>
 
+
 class Flock {
 public:
 	
-	int n;
+	int n = 40;
+
 	std::vector<Boid> boids;
+	
+	Eigen::Matrix<float, 40, 40> dist;
+	float dist_treshold = 1.5;
 
 	Eigen::Vector3f c;
 	Eigen::Vector3f v;
@@ -25,13 +30,14 @@ public:
 
 	void compute_flock_c();
 	void compute_flock_v();
+	void compute_dist_matrix();
 
-	Eigen::Vector3f rule_cohesion(Boid);
-	Eigen::Vector3f rule_separation(Boid);
-	Eigen::Vector3f rule_alignement(Boid);
+	int reorder_boids(int, std::vector<Boid>);
 
 	Target target;
 	Predator pred;
+
+	
 };
 
 #endif 

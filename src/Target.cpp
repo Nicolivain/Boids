@@ -16,8 +16,12 @@ void Target::draw() {
 	glPopMatrix();
 }
 
-Eigen::Vector3f Target::get_aim_accelaration(Boid b) {
+Eigen::Vector3f Target::get_aim_acceleration(Boid b) {
     return alpha * (pos - b.p);
+}
+
+void Target::reorient_speed(Boid b){
+    b.v = b.v + 0.1 * (pos - b.p)/sqrt((pos-b.p).dot(pos-b.p));
 }
 
 void Target::update(Eigen::Vector3f c) { 
