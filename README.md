@@ -1,4 +1,4 @@
 # Boids
 Bird-oids graphic simulation in C++
 
-![figs/boids.mp4]
+![boids](figs/boids.gif)
