@@ -6,4 +6,4 @@ When they hit the target, a new one is randomly picked.
 
 ![boids](figs/boids.gif)
 
-This project was made as part of a course from B. Gschwind using a <a href="https://github.com/n-stott/mines">template</a> from N. Stott 
+This project was made as part of a course from B. Gschwind using a <a href="https://github.com/n-stott/mines">materials</a> from N. Stott 
