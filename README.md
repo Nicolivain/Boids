@@ -1,10 +1,10 @@
 # Boids
 Bird-oids flock graphic simulation in C++  
-Boids move in a flock an aim toward the target (green) while trying to avoid the predator (red).
 
-<p align='center'>
+Boids move as a flock following simple rules and aim toward the target (green) while trying to avoid the predator (red).  
+When they hit the target, a new one is randomly picked.
+
 ![boids](figs/boids.gif)
-</p>
 
 Dependencies: GLuT, Eigen
-This project was made as part of a course from B. Gschwind using a <a href="https://github.com/n-stott/mines">template</a> from N. Stott 
+This project was made as part of a course from B. Gschwind using a <a href="https://github.com/n-stott/mines">materials</a> from N. Stott 
