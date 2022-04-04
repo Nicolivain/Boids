@@ -1,7 +1,7 @@
 #include "camera_trackball.h"
 
 #include <GL/glut.h>
-#include <Eigen/Dense>
+#include "../Eigen/Dense"
 
 
 const float CameraTrackball::DEFAULT_EULER_YAW = 1.0f;

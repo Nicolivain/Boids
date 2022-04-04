@@ -2,7 +2,7 @@
 #define BOIDS_H
 
 #include <vector>
-#include <Eigen/Dense>
+#include "../Eigen/Dense"
 
 class Boid {
 public:

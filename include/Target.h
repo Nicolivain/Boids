@@ -1,5 +1,5 @@
 #include <vector>
-#include <Eigen/Dense>
+#include "../Eigen/Dense"
 #include "Boid.h"
 
 

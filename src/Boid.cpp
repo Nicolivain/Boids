@@ -1,6 +1,6 @@
 #include <iostream>
 #include <GL/glut.h>
-#include <Eigen/Dense>
+#include "../Eigen/Dense"
 #include <cmath>
 #include "Boid.h"
 

@@ -5,7 +5,7 @@
 #define M_PI 3.1415
 #endif
 
-#include <Eigen/Dense>
+#include "../Eigen/Dense"
 
 
 /// Implements a 3D trackball around the Z axis.
