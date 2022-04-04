@@ -6,5 +6,5 @@ When they hit the target, a new one is randomly picked.
 
 ![boids](figs/boids.gif)
 
-Dependencies: GLuT, Eigen
+Dependencies: GLuT, Eigen  
 This project was made as part of a course from B. Gschwind using a <a href="https://github.com/n-stott/mines">materials</a> from N. Stott 
