@@ -6,4 +6,5 @@ Boids move in a flock an aim toward the target (green) while trying to avoid the
 ![boids](figs/boids.gif)
 </p>
 
+Dependencies: GLuT, Eigen
 This project was made as part of a course from B. Gschwind using a <a href="https://github.com/n-stott/mines">template</a> from N. Stott 

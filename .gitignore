@@ -33,3 +33,5 @@
 
 /.vscode/
 /.build/
+/Eigen/
+build.sh
